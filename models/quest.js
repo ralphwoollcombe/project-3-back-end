@@ -11,11 +11,11 @@ const questSchema = new mongoose.Schema ({
         },
         review: {
             type: String,
-            rating: {
+        },
+        rating: {
                 type: Number,
                 enum: [1,2,3,4,5]
             }
-        }
     },
      experience: {
         story: {
@@ -24,11 +24,11 @@ const questSchema = new mongoose.Schema ({
         },
         review: {
             type: String,
-            rating: {
+        },
+        rating: {
                 type: Number,
                 enum: [1,2,3,4,5]
             }
-        }
     },
      transport: {
         story: {
@@ -37,11 +37,11 @@ const questSchema = new mongoose.Schema ({
         },
         review: {
             type: String,
-            rating: {
+        },
+        rating: {
                 type: Number,
                 enum: [1,2,3,4,5]
             }
-        }
     },
      nature: {
         story: {
@@ -50,11 +50,11 @@ const questSchema = new mongoose.Schema ({
         },
         review: {
             type: String,
-            rating: {
+        },
+        rating: {
                 type: Number,
                 enum: [1,2,3,4,5]
             }
-        }
     },
      music: {
         story: {
@@ -63,11 +63,11 @@ const questSchema = new mongoose.Schema ({
         },
         review: {
             type: String,
-            rating: {
+        },
+        rating: {
                 type: Number,
                 enum: [1,2,3,4,5]
             }
-        }
     },
     colours: {
         type: [String],
@@ -79,7 +79,8 @@ const questSchema = new mongoose.Schema ({
     },
     country: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Country' 
+        ref: 'Country',
+        // required: true
     },
     })
 
