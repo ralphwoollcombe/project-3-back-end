@@ -34,6 +34,8 @@ router.post('/', verifyToken, async (req, res) => {
         req.body.country = questCountry._id
         req.body.author = req.user._id
         const quest = await Quest.create(req.body)
+        questCountry.quests.push(quest._id)
+        await questCountry.save();
         res.status(201).json(quest)
     } catch (error) {
         res.status(400).json({ err: err.message });         
