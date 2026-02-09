@@ -13,7 +13,7 @@ router.get('/', verifyToken, async (req, res) => {
         res.status(200).json(quests)
     } catch (error) {
         console.log(error)
-        res.status(500).json({ err: err.message });
+        res.status(500).json({ err: error.message });
     }
 })
 
@@ -24,7 +24,7 @@ router.get('/:questId', verifyToken, async (req, res) => {
         res.status(200).json(quest)
     } catch (error) {
         console.log(error)
-        res.status(500).json({ err: err.message });         
+        res.status(500).json({ err: error.message });         
     }
 })
 
@@ -38,7 +38,7 @@ router.post('/', verifyToken, async (req, res) => {
         await questCountry.save();
         res.status(201).json(quest)
     } catch (error) {
-        res.status(400).json({ err: err.message });         
+        res.status(400).json({ err: error.message });         
     }
 })
 
