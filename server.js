@@ -8,11 +8,14 @@ const logger = require('morgan');
 const authRouter = require('./controllers/auth')
 const usersRouter = require ('./controllers/users')
 const questsRouter = require('./controllers/quests')
+const seedCountries = require('./seed/seedCountries');
+
 
 
 mongoose.connect(process.env.MONGODB_URI)
-mongoose.connection.on('connected', () => {
+mongoose.connection.on('connected', async () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}`)
+    await seedCountries();
 })
 
 app.use(express.json())
