@@ -30,7 +30,7 @@ router.get('/:questId', verifyToken, async (req, res) => {
 
 router.post('/', verifyToken, async (req, res) => {
     try {
-        const questCountry = Country.findOne({name: req.body.country})
+        const questCountry = await Country.findOne({name: req.body.country})
         req.body.country = questCountry._id
         req.body.author = req.user._id
         const quest = await Quest.create(req.body)
