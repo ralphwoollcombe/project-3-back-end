@@ -13,7 +13,7 @@ router.get('/', verifyToken, async (req, res) => {
         res.status(200).json(quests)
     } catch (error) {
         console.log(error)
-        res.status(500).json({ err: err.message });
+        res.status(500).json({ err: error.message });
     }
 })
 
@@ -24,21 +24,25 @@ router.get('/:questId', verifyToken, async (req, res) => {
         res.status(200).json(quest)
     } catch (error) {
         console.log(error)
-        res.status(500).json({ err: err.message });         
+        res.status(500).json({ err: error.message });         
     }
 })
 
 router.post('/', verifyToken, async (req, res) => {
     try {
-        const questCountry = Country.findOne({name: req.body.country})
+        const questCountry = await Country.findById(req.body.country)
+        if (!questCountry) {
+            return res.status(400).json({ err: 'Country not found' });
+        }
         req.body.country = questCountry._id
         req.body.author = req.user._id
+        console.log('REQ BODY:', req.body);
         const quest = await Quest.create(req.body)
         questCountry.quests.push(quest._id)
         await questCountry.save();
         res.status(201).json(quest)
     } catch (error) {
-        res.status(400).json({ err: err.message });         
+        res.status(400).json({ err: error.message });         
     }
 })
 
@@ -55,7 +59,7 @@ router.delete('/:questId', verifyToken, async (req, res) => {
     };
 });
 
-router.put(':questId', verifyToken, async (req, res) => {
+router.put('/:questId', verifyToken, async (req, res) => {
     try {
         const quest = await Quest.findById(req.params.questId);
         if (!quest.author.equals(req.user._id)) {
