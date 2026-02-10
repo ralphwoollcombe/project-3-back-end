@@ -9,11 +9,10 @@ const country = require('../models/country');
 router.get('/', verifyToken, async (req, res) => {
     try {
         const allCountries = await Country.find({})
-        const countries = allCountries.filter(country => 
-            country.quests.length
-        )
-    res.status(200).json(countries)
-    // console.log(countries)
+        // const countries = allCountries.filter(country => 
+        //     country.quests.length > 0
+        // )
+    res.status(200).json(allCountries)
     } catch (error) {
         res.status(500).json({error: error.message})
     }

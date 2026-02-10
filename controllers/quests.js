@@ -30,12 +30,13 @@ router.get('/:questId', verifyToken, async (req, res) => {
 
 router.post('/', verifyToken, async (req, res) => {
     try {
-        const questCountry = await Country.findOne({name: req.body.country})
-        req.body.country = questCountry._id
+        // const questCountry = await Country.findOne({name: req.body.country})
+        // req.body.country = questCountry._id
         req.body.author = req.user._id
+        console.log('REQ BODY:', req.body);
         const quest = await Quest.create(req.body)
-        questCountry.quests.push(quest._id)
-        await questCountry.save();
+        // questCountry.quests.push(quest._id)
+        // await questCountry.save();
         res.status(201).json(quest)
     } catch (error) {
         res.status(400).json({ err: error.message });         
@@ -55,7 +56,7 @@ router.delete('/:questId', verifyToken, async (req, res) => {
     };
 });
 
-router.put(':questId', verifyToken, async (req, res) => {
+router.put('/:questId', verifyToken, async (req, res) => {
     try {
         const quest = await Quest.findById(req.params.questId);
         if (!quest.author.equals(req.user._id)) {
