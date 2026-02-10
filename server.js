@@ -9,12 +9,15 @@ const authRouter = require('./controllers/auth')
 const usersRouter = require ('./controllers/users')
 const questsRouter = require('./controllers/quests')
 const countriesRouter = require('./controllers/countries');
+const countriesRouter = require('./controllers/countries')
+const seedCountries = require('./seed/seedCountries');
 
 
 
 mongoose.connect(process.env.MONGODB_URI)
-mongoose.connection.on('connected', () => {
+mongoose.connection.on('connected', async () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}`)
+    await seedCountries();
 })
 
 app.use(express.json())
@@ -22,6 +25,7 @@ app.use(cors())
 app.use(logger('dev'))
 app.use('/auth', authRouter)
 app.use('/users', usersRouter)
+app.use('/countries', countriesRouter)
 app.use('/users/:userId/quests', questsRouter)
 app.use('/countries', countriesRouter);
 

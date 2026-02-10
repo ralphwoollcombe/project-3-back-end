@@ -18,3 +18,33 @@ router.get('/', verifyToken, async (req, res) => {
 
 
 module.exports = router;
+const Quest = require('../models/quest');
+const Country = require('../models/country')
+const verifyToken = require('../middleware/verify-token');
+const country = require('../models/country');
+
+router.get('/', verifyToken, async (req, res) => {
+    try {
+        const allCountries = await Country.find({})
+        const countries = allCountries.filter(country => 
+            country.quests.length
+        )
+    res.status(200).json(countries)
+    // console.log(countries)
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+})
+
+router.get('/:countryId', verifyToken, async (req, res) => {
+    try {
+        const country = await Country.findById(req.params.countryId)
+        .populate('quests')
+        res.status(200).json(country)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ err: error.message });
+    }
+})
+
+module.exports = router
