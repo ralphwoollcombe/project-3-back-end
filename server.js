@@ -8,6 +8,7 @@ const logger = require('morgan');
 const authRouter = require('./controllers/auth')
 const usersRouter = require ('./controllers/users')
 const questsRouter = require('./controllers/quests')
+const countriesRouter = require('./controllers/countries');
 const countriesRouter = require('./controllers/countries')
 const seedCountries = require('./seed/seedCountries');
 
@@ -26,6 +27,8 @@ app.use('/auth', authRouter)
 app.use('/users', usersRouter)
 app.use('/countries', countriesRouter)
 app.use('/users/:userId/quests', questsRouter)
+app.use('/countries', countriesRouter);
+
 
 
 
