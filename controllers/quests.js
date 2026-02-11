@@ -52,6 +52,9 @@ router.delete('/:questId', verifyToken, async (req, res) => {
         if (!quest.author.equals(req.user._id)) {
             return res.status(403).send("You cannot delete this quest!")
         }
+            await Country.findByIdAndUpdate(quest.country, {
+                $pull: { quests: quest._id }
+                });
             const deleteQuest = await quest.deleteOne();
             res.status(200).json(deleteQuest);
     } catch (error) {
