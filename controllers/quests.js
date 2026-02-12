@@ -109,7 +109,11 @@ router.put('/:questId', verifyToken, async (req, res) => {
         if (!quest.author.equals(req.user._id)) {
             return res.status(403).send("You're cannot edit this quest!")
         }
-        const updateQuest = await Quest.findByIdAndUpdate(req.params.questId, req.body, { new: true, runValidators: true });
+        const updateQuest = await Quest.findByIdAndUpdate(
+            req.params.questId, 
+            req.body, 
+            { new: true});
+        updateQuest._doc.author = req.user;
 
         res.status(200).json(updateQuest);
     } catch (error) {
