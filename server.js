@@ -24,6 +24,7 @@ app.use('/auth', authRouter)
 app.use('/users', usersRouter)
 app.use('/countries', countriesRouter)
 app.use('/users/:userId/quests', questsRouter)
+app.use('/quests', questsRouter)
 
 
 const PORT = 3000
