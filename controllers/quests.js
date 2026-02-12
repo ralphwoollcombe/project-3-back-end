@@ -61,7 +61,6 @@ router.get('/country/:countryId', verifyToken, async (req, res) => {
   }
 })
 
-
 router.get('/:questId', verifyToken, async (req, res) => {
     try {
         const quest = await Quest.findById(req.params.questId)
@@ -72,20 +71,6 @@ router.get('/:questId', verifyToken, async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 })
-
-router.get('/:questId', verifyToken, async (req, res) => {
-  try {
-    const quest = await Quest.findById(req.params.questId)
-      .populate('author', 'username')
-      .populate('country', 'name')
-
-    if (!quest) return res.status(404).json({ message: 'Quest not found' })
-    res.json(quest)
-  } catch (err) {
-    res.status(500).json({ err: err.message })
-  }
-})
-
 
 router.post('/', verifyToken, async (req, res) => {
     try {
