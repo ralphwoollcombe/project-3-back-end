@@ -84,7 +84,7 @@ const questSchema = new mongoose.Schema({
     },
     continent: {
         type: String,
-        enum: ['asia', 'europe', 'africa', 'oceania', 'north-america', 'south-america'],
+        enum: ['asia', 'europe', 'africa', 'oceania', 'americas', 'north-america', 'south-america'],
     },
 })
 
