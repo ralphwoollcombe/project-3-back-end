@@ -27,16 +27,12 @@ app.use('/users', usersRouter);
 app.use('/countries', countriesRouter);
 app.use('/users/:userId/quests', questsRouter);
 
-// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 
 mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}`);
 
-  // Seed countries asynchronously (non-blocking)
   (async () => {
     try {
       const count = await Country.countDocuments();
