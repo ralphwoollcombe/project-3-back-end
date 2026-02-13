@@ -10,7 +10,7 @@ const usersRouter = require ('./controllers/users')
 const questsRouter = require('./controllers/quests')
 const countriesRouter = require('./controllers/countries')
 const seedCountries = require('./seed/seedCountries');
-const Country = require('../models/country')
+const Country = require('./models/country')
 
 mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on('connected', async () => {
