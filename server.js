@@ -22,6 +22,9 @@ app.use(cors());
 app.use(logger('dev'));
 
 // Routes
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to the backend API!' });
+});
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/countries', countriesRouter);
