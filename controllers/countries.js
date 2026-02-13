@@ -4,7 +4,6 @@ const router = express.Router();
 const Quest = require('../models/quest');
 const Country = require('../models/country')
 const verifyToken = require('../middleware/verify-token');
-const country = require('../models/country');
 
 router.get('/', verifyToken, async (req, res) => {
     try {
