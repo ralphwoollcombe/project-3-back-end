@@ -13,9 +13,15 @@ const seedCountries = require('./seed/seedCountries');
 
 mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on('connected', async () => {
-    console.log(`Connected to MongoDB ${mongoose.connection.name}`)
+  console.log(`Connected to MongoDB ${mongoose.connection.name}`);
+  const count = await Country.countDocuments();
+  if (count === 0) {
+    console.log('Seeding countries...');
     await seedCountries();
-})
+  } else {
+    console.log('Countries already seeded, skipping...');
+  }
+});
 
 app.use(express.json())
 app.use(cors())
