@@ -48,19 +48,6 @@ router.get('/', verifyToken, async (req, res) => {
     }
 })
 
-
-router.get('/country/:countryId', verifyToken, async (req, res) => {
-  try {
-    const quests = await Quest.find({ country: req.params.countryId })
-      .populate('author')
-      .populate('country')
-
-    res.status(200).json(quests)
-  } catch (error) {
-    res.status(500).json({ err: error.message })
-  }
-})
-
 router.get('/:questId', verifyToken, async (req, res) => {
     try {
         const quest = await Quest.findById(req.params.questId)
