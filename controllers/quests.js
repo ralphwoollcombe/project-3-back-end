@@ -48,20 +48,6 @@ router.get('/', verifyToken, async (req, res) => {
     }
 })
 
-
-router.get('/country/:countryId', verifyToken, async (req, res) => {
-  try {
-    const quests = await Quest.find({ country: req.params.countryId })
-      .populate('author')
-      .populate('country')
-
-    res.status(200).json(quests)
-  } catch (error) {
-    res.status(500).json({ err: error.message })
-  }
-})
-
-
 router.get('/:questId', verifyToken, async (req, res) => {
     try {
         const quest = await Quest.findById(req.params.questId)
@@ -72,20 +58,6 @@ router.get('/:questId', verifyToken, async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 })
-
-router.get('/:questId', verifyToken, async (req, res) => {
-  try {
-    const quest = await Quest.findById(req.params.questId)
-      .populate('author', 'username')
-      .populate('country', 'name')
-
-    if (!quest) return res.status(404).json({ message: 'Quest not found' })
-    res.json(quest)
-  } catch (err) {
-    res.status(500).json({ err: err.message })
-  }
-})
-
 
 router.post('/', verifyToken, async (req, res) => {
     try {
@@ -121,11 +93,11 @@ router.delete('/:questId', verifyToken, async (req, res) => {
         if (!quest.author.equals(req.user._id)) {
             return res.status(403).send("You cannot delete this quest!")
         }
-        if (quest.country) {
-            await Country.findByIdAndUpdate(quest.country, { $pull: { quests: quest._id } })
-        }
-        const deleteQuest = await quest.deleteOne();
-        res.status(200).json(deleteQuest);
+            await Country.findByIdAndUpdate(quest.country, {
+                $pull: { quests: quest._id }
+                });
+            const deleteQuest = await quest.deleteOne();
+            res.status(200).json(deleteQuest);
     } catch (error) {
         res.status(500).json({ err: error.message })
     };
